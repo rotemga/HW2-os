@@ -1,0 +1,11 @@
+Explanations to the results I have seen:
+
+It can see from the graph that without O_DIRECT, on a file in the new file system, it is much more faster than with O_DIRECT, on a file in the new file system.
+The explanation for that is that without O_DIRECT,  linux usually tends to cache maximum I/O requests in memory so that consequent read can be served right from main memory and also write operations are performed on main memory giving illusion to application process of higher read/write performance.
+With O_DIRECT, it try to minimize cache effects of the I/O to and it write/read data directly from the disk.
+In general this will degrade performance.
+The results of with O_DIRECT, on a file in the new file system and with O_DIRECT on the raw device file are similar because in both cases we write/read data directly from the disk.
+
+Moreover, we can notice from the graph that when we have smaller write size, we use more system calls, and we perform more writings.
+So, from 4KB to 64KB the running time is getting better and the throughput is bigger as the write size is bigger.
+But, when we have much more bigger write size, than the throughput can be smaller. In this case, having smaller amount of system calls with bigger write size is more expensive than big amount of system calls with smaller write size.
